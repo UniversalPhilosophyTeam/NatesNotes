@@ -1,0 +1,178 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 1} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 1 with MATLAB demo SOLUTIONS, 09/08/16}
+Nate Sawicki
+
+\section*{6 \hspace{3mm} MATLAB Problem Solutions}
+
+\subsection*{6.1 \hspace{3mm} Generate a Signal}
+\begin{center}
+
+>> x = [3 5 1];
+
+\end{center}
+
+\subsection*{6.2 \hspace{3mm} Plot a Signal}
+\begin{center}
+
+>> stem(x)
+
+\end{center}
+
+\subsection*{6.3 \hspace{3mm} Generate a longer signal}
+
+This question was somewhat open ended. But to create a cosine wave, there's a certain way we often declare t:
+\begin{center}
+
+>> t = 0:1/(fs):duration;
+
+
+\end{center}
+
+\begin{center}
+
+
+>> cosWave = cos(t);
+
+\end{center}
+
+\subsection*{6.4 \hspace{3mm} Music Processing Basics}
+
+What is x[n]?
+\begin{center}
+
+$x[n] = \begin{cases}x(n/(fs)), & n \hspace{1mm} \epsilon \hspace{1mm} \mathbb{Z}$ (T is the sampling frequency) $\\ 0, & otherwise \end{cases}$    
+
+
+\end{center}
+
+\vspace{4mm}
+
+\begin{center}
+
+$x[n] = \begin{cases}cos(2\pi 400 n/44100), & n \hspace{1mm} \epsilon \hspace{1mm} \mathbb{Z}$ (fs is the sampling frequency) $\\ 0, & otherwise \end{cases}$    
+
+
+\end{center}
+
+
+\vspace{4mm}
+
+Create x[n] in MATLAB using the variable t from 1.3. Name the variable x.
+
+\begin{center}
+
+>> t = 0:1/44100:duration;
+
+\end{center}
+
+\begin{center}
+
+>> x = cos(2*pi*400*t)
+
+\end{center}
+
+\begin{center}
+
+>> plot(t,x) or stem(t,x)
+
+\end{center}
+
+\begin{center}
+
+>> xlabel('time')
+
+\end{center}
+
+\begin{center}
+
+>> ylabel('Value of Cosine')
+
+\end{center}
+
+\subsection*{6.5 \hspace{3mm} Analyze the Signal}
+
+\begin{center}
+
+>> Fourier = fft(x)
+
+\end{center}
+
+\begin{center}
+
+>> plot(abs(fftshift(Fourier)))
+
+\end{center}
+
+\section*{Theoretical Problems}
+
+\subsection*{7 \hspace{3mm} Alternative Expressions for Sequences}
+Let $x[n] = \begin{cases} \left(\frac{1}{2}\right)^n, & n \text{ nonnegative multiple of 4} \\ -\left(\frac{1}{2}\right)^n, & n \text{ nonnegative multiple of 2, but not a nonnegative multiple of 4} \\ 0, & \text{otherwise}\end{cases}$ \\
+Express $x[n]$ mathematically in three different ways.
+
+{\color{blue}
+1. $x[n] = \{\underline{1}, 0, \frac{-1}{4}, 0, \frac{1}{16}, 0, \frac{-1}{64},... \}$ \\
+\\
+2. $x[n] = \delta[n]-\frac{1}{4}\delta[n-2]+\frac{1}{16}\delta[n-4]-\frac{1}{64}\delta[n]+...$ \\ \\
+3. $x[n] = \sum\limits_{k=0}^\infty (-1)^k(\frac{1}{4})^k\delta[b-2k]$ \\ \\
+4. $x[n] = u[n]cos\left(\frac{\pi}{2}n\right)\left(\frac{1}{2}\right)^n$ }
+
+
+
+
+
+
+
+\end{document}

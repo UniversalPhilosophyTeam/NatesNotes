@@ -1,0 +1,488 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 1} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 1 with MATLAB demo, 09/08/16}
+Nate Sawicki
+
+\section{What is a digital signal? Discrete Time vs. Continuous Time}
+
+A digital signal is simply a sequence of discrete values. A digital signal x[n] is only valid for integer n. A continuous signal x(t) is valid for all t.
+
+
+Digital signals can be denoted using brackets, braces, or parenthesis.  \newline
+
+Example: x[n] =[\underline{1}, 2, 3, 3, 5, 1]
+
+\emph{NOTE:} We underline a value to denote the 0th index of a signal ( n = 0 )
+
+
+\section{Kronecker Delta (a.k.a. Delta Sequence, Unit Sample Sequence)}
+
+$\delta[n] = \begin{cases}1, & n = 0 \\ 0, & n\neq 0 \end{cases}$
+
+\subsection{Decomposition of Discrete Signals with Shifted Deltas}
+Any sequence $x[n]$ can be written as $x[n]=\sum\limits_{k=-\infty}^\infty x[k]\delta[n-k]$
+
+\subsection{Dirac Delta (a.k.a. Unit Impulse Function)}
+
+A loose definition:
+
+$\delta(t) = \begin{cases} +\infty,& t = 0 \\ 0, & t \neq 0 \end{cases}$ \quad  s.t. $\int_{-\infty}^\infty \delta(t) dt = 1$.
+
+
+A more precise definition:
+
+$\delta(t) = \lim\limits_{\Delta\rightarrow 0} \frac{1}{\Delta} rect(\frac{t}{\Delta})$
+
+\subsection{Decomposition of Continuous Signals with Shifted Deltas}
+Any continuous-domain function $x(t)$ can be written as $x(t)=\int\limits_{-\infty}^\infty x(\tau)\delta(t-\tau)d\tau$
+
+
+\subsection{Kronecker vs. Dirac}
+
+What's the deal with these different delta functions? 
+
+The Kronecker delta, denoted $\delta[n]$, is a sequence indexed over a discrete domain, in other words, $n \in \mathbb{Z}$. The Dirac delta, denoted $\delta(t)$ or drawn as an upward pointing arrow, is a function over a continuous domain, in other words $t \in \mathbb{R}$. In this class, we're dealing exclusively with discrete-time signals, so in the time domain, we'll have Kronecker deltas. However, when we take the DTFT of a discrete-time signal, we get a result in the continuous frequency domain ($\omega$), so if we have an impulse in the continuous frequency domain, it will be a Dirac delta, $\delta(\omega)$.
+
+Spiritually, these functions are the same though. 
+
+
+\section{Properties of Discrete Signals}
+
+\subsection{Periodicity}
+As signal $x[n]$ is periodic if there exists a number $n_0$ such that $x[n]=x[n-n_0]$ for all $n$. The period of the signal is $n_0$.
+
+For sinusoidal functions (i.e. $cos\left(\omega n + \phi\right)$), the function is periodic iff $\omega$ is a rational multiple of $\pi$, i.e. $\omega = \frac{M}{N}\pi$ for integers $M$ and $N$.
+
+\subsection{Boundedness}
+A signal is bounded if there exists a positive, finite number $B$ such that $|x[n]|  \leq B$ for all $n$. 
+
+\subsection{Causality}
+A signal $x[n]$ is causal if $x[n]=0$ for $n<0$.
+
+\subsection{Symmetry}
+A signal $x[n]$ is symmetric if $x[n] = x[-n]$. Signals with symmetry are also called "even".
+
+If instead a signal has the property that $-x[n] = x[-n]$, then it is called "odd".
+
+\section{Properties of the Delta Functions}
+
+\subsection{Sampling Property of the Kronecker Delta}
+$\delta[n-n_0]x[n] = \delta[n-n_0]x[n_0]$
+
+\subsection{Sifting Property of the Kronecker Delta}
+$\sum\limits_{n=-\infty}^\infty \delta[n-n_0]x[n] = x[n_0]$
+
+\subsection{Scaling Property of the Dirac Delta}
+$\delta[2n]=\delta[n]$ Note that there is no scaling factor!
+
+\subsection{Sampling Property of the Dirac Delta}
+$\delta(t-t_0)x(t) = \delta(t-t_0)x(t_0)$
+
+note: The result is a function!
+
+\subsection{Sifting Property of the Dirac Delta}
+$\int\limits_{-\infty}^\infty \delta(t-t_0)x(t) = x(t_0)$
+
+note: The result is a scalar!
+
+\subsection{Scaling Property of the Dirac Delta}
+
+$\delta(\alpha t)= \frac{1}{|\alpha|} \delta(t)$ for any scalar $\alpha$
+
+\vspace{80mm}
+
+\section{MATLAB basics}
+
+\subsection{How to create a digital signal}
+
+To create a signal (vector) called sigVec in MATLAB:
+\begin{center}
+{ >> sigVec = [1 2 3 4 8 9 12 8]}
+
+
+\end{center}
+
+\subsection{How to transpose a signal}
+
+To flip the orientation of sigVec, use an apostrophe to denote a transpose
+
+
+\begin{center}
+{ >> sigVecFlipped = sigVec' }
+
+\end{center}
+
+\subsection{MATLAB indexing}
+To index a matrix called sigVec, use parenthesis:
+
+\begin{center}
+sigVec(row,column)
+
+\end{center}
+
+\vspace{5mm}
+
+sigVec is the 1 x 8 matrix from 0.1. Suppose we want to index the 3rd entry.
+\begin{center}
+{>> thirdEntry = sigVec(3)}
+
+\end{center}
+
+Alternatively
+\begin{center}
+{>> thirdEntry = sigVec(1,3)}
+
+\end{center}
+
+\subsection{Using functions}
+MATLAB has many built in functions for things that you might want to do. Often, these functions will require an input and produce an output. Function calls in MATLAB usually take the form:\newline
+
+\begin{center}
+
+>> output = function(input)
+
+\end{center}
+
+\begin{center}
+
+OR
+
+\end{center}
+
+\begin{center}
+
+>> [output1, output2, ...] = function(input1, input2, ...)
+
+\end{center}
+
+\subsection{Colon operator as a counting tool}
+The colon operator is "one of the most useful operators in MATLAB" according to Mathworks. This operator does not have a strict definition, but becomes very intuitive after using it a few times. The colon operator can be used in the following ways:\newline
+
+\begin{center}
+
+To count up or down by 1      
+
+>> startingNumber : endingNumber
+
+
+\end{center} 
+
+\vspace{4mm}
+\begin{center}
+
+
+To count up or down by Increment
+
+>> startingNumber : Increment : endingNumber
+
+\end{center} 
+
+
+\vspace{4mm}
+\textbf{Example:} The colon operator can be used to create large signal vectors. Suppose we want to create a signal called n, which simply counts to 30 starting from 0. We could type out:
+
+\begin{center}
+>> n = [0 1 2 3 4 5 6 7 ...]
+\end{center}
+
+\vspace{4mm}
+
+Unfortunately, your GSI gets a severe hand cramp from typing every digit manually. He explains the colon operator can be used to count up more efficiently than typing by hand:
+
+\begin{center}
+
+>> n = 0:30;
+
+\end{center}
+
+\vspace{4mm}
+
+Now suppose we want to create an array that counts backwards from 30 to 0, skipping every odd number. The colon operator can be used for signals of this type. We are not limited to counting up or down by one.
+
+\begin{center}
+
+n = 30:-2:0;
+
+\end{center}
+
+\subsection{Colon operator for indexing}
+The colon operator can also be used to index or select certain portions of a signal. Recall sigVec from 0.1
+
+\begin{center}
+sigVec = [1 2 3 4 8 9 12 8]
+\end{center} 
+
+The colon operator can be used as a shorthand to select all terms in a row or column.\newline
+\textbf{Example:} 
+
+\begin{center}
+
+>> x = sigVec(:)
+
+
+
+\end{center}
+
+\begin{center}
+
+
+// x  = [ 1 2 3 4 8 9 12 8 ] 
+
+
+\end{center}
+
+\vspace{4mm}
+
+\begin{center}
+
+>> x = sigVec(:,1)
+
+
+
+\end{center}
+
+\begin{center}
+
+
+// x  = [ 1  ] 
+
+
+\end{center}
+
+\begin{center}
+
+>> x = sigVec(1,:)
+
+
+
+\end{center}
+
+\begin{center}
+
+
+// x  = [ 1 2 3 4 8 9 12 8 ] 
+
+
+\end{center}
+
+
+\textbf{Example:} 
+
+Create a matrix in MATLAB using the following command:
+\begin{center}
+
+
+>> Matrix = [ 1 2 3; 3 5 1; 1 5 3];
+
+
+\end{center}
+
+
+\vspace{4mm}
+
+Using the colon operator we can select parts of Matrix.
+
+\vspace{4mm}
+
+\begin{center}
+
+>> x = Matrix(2,:)
+
+
+
+\end{center}
+
+\begin{center}
+
+
+// x  =  [3 5 1]
+
+\end{center}
+
+\vspace{4mm}
+
+\begin{center}
+
+>> x = Matrix(:,3)
+
+
+
+\end{center}
+
+\begin{center}
+
+
+// x  =  [3 1 3]
+
+\end{center}
+
+\vspace{4mm}
+
+\begin{center}
+
+>> x = Matrix(1:2:3,3)
+
+
+
+\end{center}
+
+\begin{center}
+
+
+// x  =  [3 3]
+
+\end{center}
+
+
+
+
+
+
+
+
+\section{MATLAB Problems}
+\subsection{Generate a Signal}
+
+Using MATLAB, generate a signal of length 3 using the number 3, 5, and 1.
+
+\subsection{Plot a signal}
+Using MATLAB, plot the signal you generated in 1.1 as a stem plot.
+
+\subsection{Generate a longer signal}
+First type the following commands into MATLAB:\newline
+(Note: put a semicolon at the end of your command to suppress output)
+
+\begin{center}
+
+>> T = 44100;
+
+
+
+\end{center}
+
+\begin{center}
+
+>> duration = 3;
+
+
+
+\end{center}
+
+\begin{center}
+
+>> t = ??
+
+
+\end{center}
+
+In MATLAB, create the variable t using two colon operators, T, and duration.
+
+\vspace{5mm}
+Using the new variable t, create a cosine wave using the cos( ) function. Save the cosine wave as a new variable.
+
+
+
+\subsection{Music Processing Basics! (Using the sound function)}
+\vspace{1.5mm}
+\begin{center}
+ x[$\dfrac{n}{T}$] = x(t) \hspace{5mm}     when n $\epsilon$ $\mathbb{Z}$,   where T is the sampling frequency
+
+\vspace{3mm}
+Suppose x(t) = cos(2$\pi$*400t)
+\end{center}
+
+\vspace{7mm}
+
+What is x[n]?\newline
+Create x[n] in MATLAB using the variable t from 1.3. Name the variable x.\newline
+
+\vspace{4mm}
+Type the command plot(t,x)   (you may need to zoom in or out)\newline
+\textbf{Type the command sound(x,44100) or sound(x,T)}
+
+\subsection{Analyze the signal}
+Use Google to search for the Fast Fourier Transform MATLAB command.\newline Figure out how to use this function on the cosine wave x from 1.4.\newline
+
+\vspace{3mm}
+
+The Fast Fourier Transform function will return an output variable, name this variable "Fourier".\newline
+Now type the following command:
+
+\begin{center}
+
+>> plot(abs(fftshift(Fourier)))
+
+\end{center}
+
+\vspace{80mm}
+\begin{figure}[h]
+
+\centering
+\includegraphics[width=0.6\textwidth]{cosineFFTplot}
+\caption {If you did everything right, you should end up with a plot like this}
+\end{figure}
+
+\section*{Theoretical Problems (optional)}
+The following problems were compiled by Mai Le
+% $x[n]$ can refer to a sequence or a value
+
+\section{Alternate Expressions for Sequences}
+Let $x[n] = \begin{cases} \left(\frac{1}{2}\right)^n, & n \text{ nonnegative multiple of 4} \\ -\left(\frac{1}{2}\right)^n, & n \text{ nonnegative multiple of 2, but not a nonnegative multiple of 4} \\ 0, & \text{otherwise}\end{cases}$ \\
+Express $x[n]$ mathematically in three different ways
+
+\section{Nonlinear Systems}
+Give an example of a system that is nonlinear but satisfies $\mathcal{T}\{\alpha x[n]\} = \alpha \mathcal{T}\{x[n]\}$ for all sequences $x[n]$ and for all scalars $\alpha \in \mathbb{R}$.
+
+\end{document}

@@ -1,0 +1,288 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 4} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 7 Problems, 10/26/16}
+Nate Sawicki \newline
+Select problems by Mai Le and Kevin Moon
+
+\section{Linear Constant Coefficient Difference Equations (LCCDE)}
+ 
+LCCDE equations are a very important part of DSP. These equations give us a lot of intuition about our system in a short amount of time. We can use our knowledge of the DTFT to analyze difference equations, but we will also introduce the z-transform which is a simply a more general transform. \newline
+
+LCCDE equations have the form:
+\vspace{3mm}
+\begin{center}
+
+$
+\sum_{k  = 0}^{N} \alpha_k y[n - k] =  \sum_{m  = 0}^{M} b_m x[n - m] 
+$
+\end{center}
+
+This might look complicated at first sight, but let's write the above expression in an expanded fashion:
+\vspace{3mm}
+
+\begin{center}
+$
+\alpha_0 y[n - 0] + \alpha_1 y[n - 1] + \alpha_2 y[n - 2] + ... \alpha_N y[n - N] =  b_0 x[n - 0] + b_1 x[n - 1] + b_2 x[n - 2] + ... b_M y[n - M] 
+$
+\end{center}
+
+\section{Finding the Transfer Function from LCCDE}
+ 
+Using our knowledge of the DTFT, we can find an expression for H($\omega$):
+\vspace{2mm}
+
+\begin{center}
+
+$
+Y(\omega) = X(\omega)H(\omega)
+$
+\end{center}
+\begin{center}
+
+$
+Y(\omega)/X(\omega) = H(\omega)
+$
+\end{center}
+
+\vspace{2mm}
+
+In the next problem, we will explore why it is so easy to find Y($\omega$)/X($\omega$) for LCCDE. 
+\vspace{2mm}
+
+
+\section{Finding Transfer Functions}
+
+Solve for H($\omega$) for the following LCCDE by first taking the DTFT of the left and right hand side respectively:\newline
+
+(a) y[n] = x[n-1]\newline
+(b) 2y[n] + 4y[n-4] = x[n] + 3x[n-1]\newline
+(c) $\alpha_0 y[n - 0] + \alpha_1 y[n - 1] + ... \alpha_N y[n - N] =  b_0 x[n - 0] + b_1 x[n - 1] + b_2 x[n - 2] + ... b_M y[n - M] 
+$
+
+
+\section{Z-transform equations}
+
+\vspace{3mm}
+
+\begin{center}
+
+$
+X(z) = \sum_{\tau  = -\infty}^{\infty} x[n] z^{-n}
+$
+\end{center}
+
+\vspace{3mm}
+
+
+\begin{center}
+
+$
+x[n]= 1/(2 \pi j) \int_C X(z) z^{n-1}dz
+$
+\end{center}
+
+Note:\newline
+The inverse z-transform can be calculated by computing the integral above over any closed contour within the Region of Convergence containing the origin. Typically we never calculate the inverse z-transform this way. Most often, you will use an inverse z-transform pair, or calculate the partial fraction expansion to obtain the x[n].
+
+\vspace{2mm}
+
+Find H(z) for the equations from part 3. HINT: Z(x[n-$n_0$]) has a z-transform of $z^{-n_0}$X(z)  \newline
+(a) y[n] = x[n-1]\newline
+(b) 2y[n] + 4y[n-4] = x[n] + 3x[n-1]\newline
+(c) $\alpha_0 y[n - 0] + \alpha_1 y[n - 1] + ... \alpha_N y[n - N] =  b_0 x[n - 0] + b_1 x[n - 1] + b_2 x[n - 2] + ... b_M y[n - M] 
+$
+
+\vspace{3mm}
+
+\section{Region of Convergence (ROC)}
+\begin{center}
+$
+X(z) = \sum_{\tau  = -\infty}^{\infty} x[n] z^{-n}
+$
+\end{center}
+
+\vspace{2mm}
+
+For X(z) to be a valid transform, we need:
+\vspace{2mm}
+\begin{center}
+$
+\sum_{n = -\infty}^{\infty} |x[n]||z|^{n} < \infty
+$
+\end{center}
+
+\vspace{2mm}
+
+The above equations specify what the Region of Convergence is, but typically we can determine the region of convergence using LCCDE equation rules:\newline
+
+\begin{center}
+
+1. The ROC is a connected region with circular symmetry. If z0 is in the ROC,
+then so is any z such that |z| = |z0|.
+
+2. The ROC for a finite-support sequence is the entire complex plane. There
+are possible exceptions that zero or infinity may not be included in the ROC.
+
+
+3. The ROC for a causal sequence extends out to infinity. This is also true in
+general for a “right-sided sequence,” one whose support begins at some finite
+value and continues to the right.
+
+4. The ROC for an anticausal sequence is a disk in the complex plane. This is
+also true in general for a “left-sided sequence,” one whose support begins at
+negative infinity and ends at some finite value.
+
+5. The ROC for a stable system includes the unit circle.
+
+\end{center}
+
+\newpage
+\section{ROC problem using partial fractions}
+
+Recall H($\omega$) = Y($\omega$)/X($\omega$). In this problem, we willl see why the partial fraction expansion is a nifty tool for calculating the impulse response from an inverse Z-transform. Recall the method of partial fractions expansion:
+
+\begin{center}
+
+
+$
+\frac{A_0}{(1-a_1 z^{-1})(1 - a_2 z^{-1})  ... (1 - a_n z^{-1})}
+$
+
+\vspace{3mm}
+
+\end{center}
+
+
+We want to split the above term into its partial fractions, such that sum of the partial fractions equals our original term
+\begin{center}
+$
+\frac{A_1}{(1-a_1 z^{-1})} + \frac{A_2}{(1 - a_2 z^{-1})} + ... \frac{A_n}{(1 - a_n z^{-1})} = \frac{A_0}{(1-a_1 z^{-1})(1 - a_2 z^{-1}) ... (1 - a_n z^{-1})}
+$
+
+\end{center}
+
+\vspace{3mm}
+
+Using partial fractions expansion, determine the impulse response h[n] associated with the following Z-transform. Also draw the pole-zero plot and the ROC:
+
+
+\begin{center}
+
+H(z) = $\frac{1}{(1-\frac{1}{4} z^{-1})(1-\frac{1}{2} z^{-1})}$   \hspace{3mm} |z| > 1/2
+
+\end{center}
+
+\section{Connection to the Fourier Transform}
+
+The DTFT is not always defined. Recall one of the conditions for a discrete sequence to have a DTFT:\newline
+
+\begin{center}
+
+$
+\sum_{n = -\infty}^{\infty} |x[n]| < \infty
+$
+\end{center}
+
+\vspace{2mm}
+
+Unfortunately x[n] is not always absolutely summable, so we need something general that yields a valid transform for a greater variety of systems.
+
+\vspace{2mm}
+
+\begin{center}
+
+$
+X(\omega) = \sum_{\tau  = -\infty}^{\infty} x[n] e^{-j \omega n}
+$
+\end{center}
+
+\begin{center}
+
+$
+X(z) = \sum_{\tau  = -\infty}^{\infty} x[n] z^{-n}
+$
+\end{center}
+
+\vspace{2mm}
+
+Notice, if we let z = e$^{j \omega}$ then X(z) = X($\omega$). This means that we are choosing z to be N equally spaced points around the unit circle. And to calculate the inverse z transform, we use the unit circle as our contour in the inverse equation.
+
+
+
+\newpage
+\section{Extra Problems}
+
+(a) Why is a system stable when the unit circle is contained in the ROC? Does a valid DTFT exist when the unit circle is in the ROC?\newline
+(b) Solve for the partial fraction expansion for the following:\newline
+\begin{center}
+
+$
+\frac{s+3}{s(s+2)^2(s+5)}
+$
+
+\end{center}
+
+\vspace{2mm}
+
+(c) Show graphically why: $\delta$[n] - h$_{lp}$[n] = h$_{hp}$[n]. Hint: What is the DTFT of $\delta$[n]
+
+
+
+
+
+
+
+\end{document}

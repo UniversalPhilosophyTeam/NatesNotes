@@ -1,0 +1,409 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 2} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 2, 1/17/17}
+Nate Sawicki \newline
+Select problems by Mai Le and Kevin Moon
+
+\section{Periodicity of mulitiple sinusoids}
+
+Suppose x[n] is the summation of m sinusoids with different fundamental periods:
+
+\vspace{3mm}
+
+\begin{center}
+
+x[n] = $cos[\frac{n\pi}{4}]$ + $sin[\frac{n\pi}{32}]$ + ...
+
+\end{center}
+
+
+\vspace{3mm}
+
+Assuming the $i^{th}$ sinusoid has fundamental period $T_i$, the fundamental period of x[n] is the Least Common Multiple of ($T_1, T_2, ..., T_m$)\newline
+
+\vspace{20mm}
+
+\begin{center}
+Let x[n]  = $cos[\frac{n\pi}{4}]$ + $sin[\frac{n\pi}{32}]$ 
+\end{center}
+
+\vspace{3mm}
+$T_1$ = 8, $T_2$ = 64, thus the Fundamental Period of x[n] is LCM(8,64) = 64\newline
+
+\vspace{3mm}
+
+\section{What is a basis?}
+A basis for a class of signals is a collection of M signals in the class that have the property that any other signal in that class can be written as a weighted sum of those signals.
+
+\begin{center}
+y[n] = $\sum\limits_{m = 1}^M a_m x_m[n]$
+\end{center}
+
+\vspace{4mm}
+
+Example:
+\begin{center}
+\[
+\begin{bmatrix}
+   1        \\
+    0      \\
+   0          
+\end{bmatrix}
+,
+\begin{bmatrix}
+      0        \\
+    1      \\
+   0       \\    
+\end{bmatrix}
+,
+\begin{bmatrix}
+   0        \\
+    0     \\
+   1    \\
+    
+\end{bmatrix}
+\]
+\end{center}
+ 
+can represent the following vector using a weighted sum
+
+\begin{center}
+\[
+\begin{bmatrix}
+   1        \\
+    4      \\
+   9          
+\end{bmatrix}
+\]
+\end{center}
+
+using the weights $a_1 = 1$, $a_2 = 4$, and $a_3 = 9$. In fact, the three vectors form a  basis for any signal of length three. These are called the standard basis or canonical basis vectors for $\mathbb{R}^3$.
+
+\section{Strategies for identifying a basis}
+One way to characterize a basis for signals of length N:
+
+\vspace{3mm}
+
+\begin{center}
+y[n] = $\sum\limits_{m = 1}^{N-1} \beta_m y_m[n] = 0$ implies that $\beta_k$ = 0 for all m = 0, ..., N - 1.
+\end{center}
+
+\vspace{3mm}
+
+If the condition above is true, then the vectors $y_1, ..., y_{N-1}$ are \emph{linearly independent}. If any combination of weighted sum of $y_m$ add up to 0, then the vectors $y_1, ..., y_{N-1}$ are \emph{linearly dependent}
+
+\vspace{4mm}
+
+Example:
+\[
+\begin{bmatrix}
+   1  \hspace{3mm}  3 \hspace{3mm}   -4  \\
+\hspace{1mm}   1 \hspace{3mm}    9  \hspace{3mm}  -10\\
+    0 \hspace{3mm}     8 \hspace{3mm}  -8
+\end{bmatrix}
+\]
+
+
+If the $i^{th}$ column represents the vector $y_i$, do these vectors represent a valid basis?\newline
+NO! using the weights $\beta_1$ =  $\beta_2$  = $\beta_3$ = 1, we can see:
+
+\begin{center}
+y[n] = $\sum\limits_{m = 1}^{N-1} \beta_m y_m[n] = 0$
+\end{center}
+
+
+\section{Identifying a basis by forming the canonical basis}
+A collection of signals consitute a basis for $\mathbb{R}^{n}$ if one can form the n canonical basis vectors as a weighted sum of the collection.
+
+Example:\newline
+Do the columns of A constitute a basis for $\mathbb{R}^{3}$?
+
+\[
+A = 
+\begin{bmatrix}
+   1  \hspace{3mm}  2\hspace{3mm}   0 \\
+    0 \hspace{3mm}    1  \hspace{4mm}  0\\
+    1 \hspace{3mm}     2\hspace{3mm}  1
+\end{bmatrix}
+\]
+
+\newpage
+We must show that we can form the 3 canonical basis vectors for $\mathbb{R}^{3}$ as a weighted sum of the columns of A. Recall the canonical basis vectors for  $\mathbb{R}^{3}$:
+
+\begin{center}
+\[
+\begin{bmatrix}
+   1        \\
+    0      \\
+   0          
+\end{bmatrix}
+,
+\begin{bmatrix}
+      0        \\
+    1      \\
+   0       \\    
+\end{bmatrix}
+,
+\begin{bmatrix}
+   0        \\
+    0     \\
+   1    \\
+    
+\end{bmatrix}
+\]
+\end{center}
+
+\vspace{4mm}
+Solution:
+\[
+\begin{bmatrix}
+   1        \\
+    0      \\
+   0          
+\end{bmatrix}
+= 1*column1 + 0*column2 +(-1)*column3
+\]
+
+\[
+\begin{bmatrix}
+   0      \\
+    1      \\
+   0          
+\end{bmatrix}
+= (-2)*column1 + 1*column2 +0*column3
+\]
+
+\[
+\begin{bmatrix}
+   0      \\
+    0      \\
+   1          
+\end{bmatrix}
+= 0*column1 + 0*column2 +1*column3
+\]
+
+
+
+\section{Problems}
+
+\subsection{Basis Problem}
+
+Consider the Hilbert Space $\mathbb{R}^3$ with real scalars. Find a basis for $\mathbb{R}^3$  that includes the following two vectors:
+\[
+\begin{bmatrix}
+   1        \\
+    -2      \\
+    1      
+\end{bmatrix}
+,
+\begin{bmatrix}
+    1  \\
+    4 \\
+    -2 
+\end{bmatrix}
+\]
+
+\subsection{Show vectors form a basis}
+
+Show that these four vectors form a basis for $\mathbb{R}^4$:
+\[
+\begin{bmatrix}
+   1        \\
+    0      \\
+   0       \\
+    0      
+\end{bmatrix}
+,
+\begin{bmatrix}
+      1        \\
+    1      \\
+   0       \\
+    0      
+\end{bmatrix}
+,
+\begin{bmatrix}
+   1        \\
+    1     \\
+   1    \\
+    0      
+\end{bmatrix}
+,
+\begin{bmatrix}
+       1        \\
+    1      \\
+   1       \\
+    1      
+\end{bmatrix}
+\]
+
+\subsection{Orthonormal Basis}
+
+Show that these four vectors form an orthonormal basis for $\mathbb{R}^4$ (these are called the Bell basis):
+\[
+\begin{bmatrix}
+   \frac{1}{\sqrt{2}} \\
+    0      \\
+   0       \\
+    \frac{1}{\sqrt{2}}       
+\end{bmatrix}
+,
+\begin{bmatrix}
+      \frac{1}{\sqrt{2}}         \\
+    0      \\
+   0       \\
+    -\frac{1}{\sqrt{2}}      
+\end{bmatrix}
+,
+\begin{bmatrix}
+   0     \\
+    \frac{1}{\sqrt{2}}     \\
+   \frac{1}{\sqrt{2}}  \\
+    0      
+\end{bmatrix}
+,
+\begin{bmatrix}
+      0     \\
+    \frac{1}{\sqrt{2}}     \\
+-\frac{1}{\sqrt{2}}  \\
+    0    
+\end{bmatrix}
+\]
+
+\subsection{Finding vectors that DONT form a Basis}
+
+What values of $\alpha$ make the following vectors an invalid basis?
+\[
+\begin{bmatrix}
+   \alpha \\
+    1      \\
+   1       \\
+    1   
+\end{bmatrix}
+,
+\begin{bmatrix}
+     1 \\
+    \alpha   \\
+   1       \\
+    1   
+\end{bmatrix}
+,
+\begin{bmatrix}
+  1 \\
+    1      \\
+   \alpha    \\
+    1   
+\end{bmatrix}
+,
+\begin{bmatrix}
+      1 \\
+    1      \\
+   1       \\
+    \alpha  
+\end{bmatrix}
+\]
+
+
+
+\subsection{Functions as a basis}
+Consider the Hilbert space of continuous-time real-valued polynomials of degree 3 defined on the interval [a,b]. Show that the polynomials\newline
+
+\begin{center}
+
+$x_0(t) = 1, x_1(t) = t, x_2(t) = t^2, x_3(t) = t^3$
+
+\end{center}
+
+\vspace{3mm}
+
+form a basis for this space. Is the orthonormal basis where we use the same inner product as $L_2$ and a = -1, b = -1?
+
+
+
+
+\section{Representing the same signal with different bases}
+
+Let x[n] =[\underline{1}, 1, 2, 3, 5]. Represent x[n] in each of the following bases.
+
+\vspace{5mm}
+
+\subsection{Standard Basis}
+
+\vspace{1.5mm}
+
+\subsection{Unit Step Sequence}
+Recall $u[n] = \begin{cases}1, & n \geq 0\\ 0, & n < 0 \end{cases}$. Let $\mathcal{S}_u = \{u[n-n_0]|n_0 \in \mathbb{Z}\}$ (unit steps shifted by any integer $n_0$) be your basis sequences. Represent $x[n]$ in $\mathcal{S}_u$.
+
+In other words, show you can write $x[n]=\sum\limits_{k=-\infty}^\infty c_k u[n-k]$ by finding the values for $c_k$.
+
+\vspace{1.5mm}
+
+\subsection{Three-Tap Rectangles Basis}
+Let $r[n] = \{\underline{1},1,1\}$ and $\mathcal{S}_r = \{r[n-n_0]|n_0 \in \mathbb{Z}\}$. Represent $x[n]$ in $\mathcal{S}_r$.
+
+\vspace{1.5mm}
+
+
+\section{Vector Spaces, Hilbert Spaces, and Inner Products}
+
+\subsection{Inner Products}
+Prove the Pythagorean theorem for norms defined by inner products. That is, if z = x + y and \newline
+x $\perp$ y, then ||x||$^2$ + ||y||$^2$ = ||z||$^2$
+
+
+
+
+
+
+\end{document}

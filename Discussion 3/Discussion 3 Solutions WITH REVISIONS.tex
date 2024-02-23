@@ -1,0 +1,347 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 3} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 3 Solutions, 09/22/16}
+Nate Sawicki \newline
+Select problems by Mai Le and Kevin Moon
+
+\section*{2 Problems}
+\subsection*{Problem 1}
+Show that B is orthonormal.
+
+\begin{center}
+\[
+B = 
+\begin{bmatrix}
+   3/\sqrt{10} \hspace{3mm}   1/\sqrt{10} \\
+   1/\sqrt{10} \hspace{3mm}   -3/\sqrt{10}           
+\end{bmatrix}
+\]
+\end{center}
+
+\vspace{4mm}
+\emph{Solution:}
+Lets show that v1 and v2 can express the standard/canonical basis vectors using a weighted sum:
+
+\vspace{5mm}
+That is, find a particular  $\alpha$ and $\beta$ such that
+\begin{center}
+ $\alpha$$v_1$ + $\beta$$v_2$ = [1 0]$^{T}$
+\end{center}
+And find a particular  $c$ and $d$ such that
+\begin{center}
+ $c$$v_1$ + $d$$v_2$ = [0 1]$^{T}$
+\end{center}
+\begin{center}
+\[
+B = 
+\begin{bmatrix}
+   v_1  \hspace{3mm}  v_2 
+\end{bmatrix}
+\]
+\end{center}
+
+\vspace{4mm}
+
+Consider ($\sqrt{10}v_1$ - 3$\sqrt{10}v_2$)/10 =
+
+
+\begin{center}
+\[
+B = 
+\begin{bmatrix}
+   0 \\
+ 1
+\end{bmatrix}
+\]
+\end{center}
+
+
+\vspace{4mm}
+
+Consider (3$\sqrt{10}v_1$ + $\sqrt{10}v_2$)/10 =
+
+\begin{center}
+\[
+B = 
+\begin{bmatrix}
+   1 \\
+ 0
+\end{bmatrix}
+\]
+\end{center}
+
+\vspace{5mm}
+
+\subsection*{2.2 \hspace{3mm} Useful Property}
+Suppose B is a valid orthogonal basis matrix
+
+\vspace{3mm}
+Then
+\begin{center}
+
+ (B$^{-1}$) exists
+
+\end{center}
+and
+\begin{center}
+
+ (B$^{-1}$) = B$^{T}$
+
+\end{center}
+
+
+
+\vspace{5mm}
+
+\subsection*{2.3}
+Last week we spent a lot of time discussing what constitutes a basis. Suppose B is any valid basis, then any signal \textbf{x} $\epsilon$ $\mathbb{R}^{2}$ (length 2) can be expressed:
+
+\vspace{3mm}
+\begin{center}
+
+B$\textbf{c}$ = \textbf{x}
+
+\end{center}
+\vspace{3mm}
+\begin{center}
+Where B is a valid basis for $\mathbb{R}^{2}$
+\end{center}
+\begin{center}
+\textbf{c} = [$c_1$ $c_2$]$^{T}$ is called \emph{the coordinates}
+\end{center}
+
+\begin{center}
+\[
+B = 
+\begin{bmatrix}
+   b_1  \hspace{3mm}   b_3 \\
+   b_2 \hspace{3mm}   b_4            
+\end{bmatrix}
+\]
+\end{center}
+
+Let $v_1$ = [$b_1$ $b_2$]$^T$, $v_2$ = [$b_3$ $b_4$]$^T$
+
+\vspace{4mm}
+\begin{center}
+B =  [\textbf{$v_1$} \textbf{$v_2$}] 
+
+\end{center}
+
+\hspace{3mm}
+
+Graphically, $v_1$ and $v_2$ represent coordinate axes.  The coordinates tell you how many $v_1$'s and $v_2$'s are needed to express \textbf{x}. So if $c_1$ = 2 and $c_2$ = 3, then you need 2$v_1$ and 3$v_2$ to create \textbf{x}. Symbolically:
+\begin{center}
+
+2$v_1$ + 3$v_2$ = \textbf{x}
+
+\end{center}
+
+\newpage
+
+\section*{2.4 \hspace{3mm} Change of Basis}
+
+Represent the signal \textbf{x} = [2 1]$^{T}$ the following ways: \newline
+(a) using the standard/canonical basis\newline
+(b) using the basis B from Problem 1, find the coordinates with respect to the new basis which represents the signal \textbf{x} = [2 1]$^{T}$\newline
+(c) Draw the graphical representation of (a) and (b) in the same $\mathbb{R}^2$ plane. Verify that even though the coordinates for (a) and (b) are different, they still represent the same vector.
+
+\vspace{5mm}
+\emph{Solution:}\newline
+(a)
+
+
+\begin{center}
+
+B$\textbf{c}$ = \textbf{x}
+
+\end{center}
+\begin{center}
+
+\[
+=
+\begin{bmatrix}
+   1 \hspace{3mm} 0 \\
+ 0 \hspace{3mm} 1
+\end{bmatrix}
+\begin{bmatrix}
+   c_1\\
+ c_2 
+\end{bmatrix} 
+= 
+\begin{bmatrix}
+   2\\
+ 1 
+\end{bmatrix} 
+\]
+
+\end{center}
+
+\vspace{3mm}
+Thus $c_1$ = 2, and $c_2$ = 1. We just found the coordinates with respect to the canonical basis.\newline
+(b)
+\begin{center}
+
+B$\textbf{c}$ = \textbf{x}
+
+\end{center}
+\begin{center}
+
+\[
+=
+\begin{bmatrix}
+   3/\sqrt{10} \hspace{3mm}   1/\sqrt{10} \\
+   1/\sqrt{10} \hspace{3mm}   -3/\sqrt{10}           
+\end{bmatrix}
+\begin{bmatrix}
+   c_1\\
+ c_2 
+\end{bmatrix} 
+= 
+\begin{bmatrix}
+   2\\
+ 1 
+\end{bmatrix} 
+\]
+
+\end{center}
+
+Using the Property from 2:
+
+\begin{center}
+
+B$\textbf{c}$ = \textbf{x}
+
+\end{center}
+
+\begin{center}
+
+$\textbf{c}$ = $B^{-1}$ \textbf{x}
+
+\end{center}
+\begin{center}
+
+$\textbf{c}$ = $B^{T}$ \textbf{x}
+
+\end{center}
+
+\begin{center}
+
+$\textbf{c}$ = [2.21 -.32]$^T$
+
+\end{center}
+
+
+
+\vspace{3mm}
+This $c_1$ = 2.21, and $c_2$ = -.32. We just found the coordinates with respect to the basis B.
+\newpage
+
+\subsection*{(c)}
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{RevisedPic.png}
+\caption {Drawing \textbf{x} = [2 1]$^T$ with different bases}
+\end{figure}
+
+
+
+
+
+\vspace{5mm}
+
+
+
+\subsection*{3 Inner Product}
+\begin{center}
+
+||z||$^2$
+
+\end{center}
+\begin{center}
+
+= ||x + y||$^2$
+
+\end{center}
+\begin{center}
+
+= (x+y)(x+y)
+
+\end{center}
+
+\begin{center}
+
+= $x^2 + 2xy + y^2$
+
+\end{center}
+
+\begin{center}
+
+xy = 0 since x $\perp$ y
+
+\end{center}
+
+\begin{center}
+
+= $x^2 + y^2$ = ||x||$^2$ + ||y||$^2$
+
+\end{center}
+
+
+
+\end{document}

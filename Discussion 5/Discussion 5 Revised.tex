@@ -1,0 +1,346 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 4} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 5 Problems, 10/13/16}
+Nate Sawicki \newline
+Select problems by Mai Le and Kevin Moon
+
+\section{Digital Frequency vs. Real Frequency}
+
+\begin{center}
+$f_{real}$ = $\frac{\omega_{digital}}{2\pi T_s}$
+
+\end{center}
+
+The highest digital frequency represented is $\pi$ thus 
+
+\begin{center}
+
+$f_{max}$ = $F_s$/2
+\end{center}
+
+The maximum frequency represented by a 44,100 sampling rate is 22,050. This is easy to remember because humans hear a frequency spectrum of approximately 20-20,000 Hz.
+
+\begin{center}
+
+>>N = length(x)\\
+
+>>frequencies = -Fs/2:Fs/N:Fs/2-Fs/N        \hspace{5mm}     // final -Fs/N term ensures length N\\
+>>plot(frequencies,fftshift(abs(fft(x))))
+
+\end{center}
+
+
+
+
+\section{Discrete-Time Fourier Transform DTFT equations}
+
+\vspace{3mm}
+
+\begin{center}
+
+$
+X(\omega) = X_{2 \pi} (w) = X(e^{j \omega}) = \sum_{n = -\infty}^{\infty} x[n]  e^{-j \omega n}
+$
+\end{center}
+
+\vspace{5mm}
+
+\begin{center}
+
+$
+x[n] = (1/{2 \pi}) \int_{2 \pi}  X(\omega) e^{j \omega n} d \omega
+$
+\end{center}
+
+\vspace{5mm}
+
+
+\section{Periodicity of DTFT}
+
+The DTFT is often written the following way, to denote that any DTFT is periodic with period $2 \pi$: \newline
+
+\begin{center}
+
+$
+X_{2 \pi} (w) =\sum_{n = -\infty}^{\infty} x[n]  e^{-j \omega n}
+$
+\end{center}
+
+\vspace{4mm}
+
+Show that the DTFT is periodic with period $2 \pi$.
+
+
+
+\vspace{3mm}
+
+
+\section{Linearity of the DTFT}
+
+The following property is called the Linearity Property of the DTFT:
+
+\begin{center}
+
+$$
+\alpha x[n] + \beta y[n] \longleftrightarrow  \alpha X(\omega) + \beta Y(\omega)
+$$
+\end{center}
+
+\vspace{4mm}
+
+Proof: (always start with the original equation !!!!!!)\newline
+
+\begin{center}
+
+$ 
+Z(e^{j \omega}) = \sum_{n = -\infty}^{\infty} z[n]  e^{-j \omega n}
+$
+\end{center}
+
+\vspace{3mm}
+
+Let z[n] = $\alpha x[n] + \beta y[n]$ \newline
+
+\begin{center}
+
+$ 
+Z(e^{j \omega}) = \sum_{n = -\infty}^{\infty} ( \alpha x[n] + \beta y[n])  e^{-j \omega n}
+$
+\end{center}
+
+\newpage
+
+\begin{center}
+
+$ 
+Z(e^{j \omega}) = \sum_{n = -\infty}^{\infty} ( \alpha x[n] )  e^{-j \omega n} + \sum_{n = -\infty}^{\infty} (  \beta y[n])  e^{-j \omega n}
+$
+\end{center}
+
+\vspace{3mm}
+
+\begin{center}
+
+$ 
+Z(e^{j \omega}) = \alpha \sum_{n = -\infty}^{\infty} (  x[n] )  e^{-j \omega n} + \beta \sum_{n = -\infty}^{\infty} (  y[n])  e^{-j \omega n}
+$
+\end{center}
+
+\vspace{3mm}
+
+\begin{center}
+
+$ 
+Z(e^{j \omega}) = \alpha X(\omega) + \beta Y(\omega)
+$
+\end{center}
+
+
+\section{Shift in Time Property of DTFT}
+
+The following property is used to find the DTFT of a signal that's been shifted: \newline
+
+\begin{center}
+
+$
+x[n - \alpha]  \longleftrightarrow  X(\omega) e^{- j \alpha \omega}
+$
+\end{center}
+
+\vspace{4mm}
+
+Using the definition of DTFT, show that the Shift in Time Property is true. 
+
+
+\section{Modulation Property of DTFT (shift in frequency)}
+
+The following property is used to find the DTFT of a signal that's been shifted: \newline
+
+\begin{center}
+
+$
+e^{j \alpha n} x[n]  \longleftrightarrow  X(\omega - \alpha)
+$
+\end{center}
+
+\vspace{4mm}
+
+Using the definition of DTFT, show that the Modulation Property is true.
+
+\vspace{5mm}
+
+\section{Summary of (Some) DTFT Properties}
+
+\vspace{3mm}
+
+
+\begin{center}
+$
+\alpha x[n] + \beta y[n] \longleftrightarrow  \alpha X(\omega) + \beta Y(\omega)
+$
+
+\end{center}
+\begin{center}
+$
+x[n - \alpha]  \longleftrightarrow  X(\omega) e^{- j \alpha \omega}
+$
+
+\end{center}
+
+
+\begin{center}
+
+$
+e^{j \alpha n} x[n]  \longleftrightarrow  X(\omega - \alpha)
+$
+\end{center}
+
+\begin{center}
+
+$
+x[kn]  \longleftrightarrow  X(\omega / k)
+$
+\end{center}
+\begin{center}
+
+$
+x[-n]  \longleftrightarrow  X(-\omega)
+$
+\end{center}
+\begin{center}
+
+$
+x[n]^{*} \longleftrightarrow  X(-\omega)^{*}
+$
+\end{center}
+\begin{center}
+
+$
+x[-n]^{*} \longleftrightarrow  X(\omega)^{*}
+$
+\end{center}
+
+\begin{center}
+
+$
+-(j n) x[n] \longleftrightarrow (d/d\omega) X(\omega)
+$
+\end{center}
+
+\begin{center}
+
+$
+x[n] * y[n] \longleftrightarrow X(\omega) Y(\omega)
+$
+\end{center}
+
+
+
+\newpage
+
+\section{Extra Problems: Cross Correlation}
+
+Recall the definition of convoluion:
+\vspace{1mm}
+\begin{center}
+$
+a[n] * b[n] = z[n] =  \sum_{\tau = -\infty}^{\infty} a[\tau] b[n - \tau]
+$
+
+\end{center}
+
+\vspace{4mm}
+
+There is an expression called the cross-correlation property of the DTFT:
+\vspace{3mm}
+\begin{center}
+$
+a^{*}[-n] * b[n] \longleftrightarrow \hspace{1.5mm} ?
+$
+
+\end{center}
+
+\vspace{5mm}
+
+(a) Find the DTFT of $a^{*}[-n] * b[n]$ using DTFT properties from part 6.\newline
+(b) Prove your answer from part (a) without using DTFT properties.
+
+
+
+\section{Extra Problems: Zero Padding 1}
+
+Let $x_1$[n] = [$x_0$ $x_1$ $x_2$ ... $x_{N-1}$]$^{T}$, a signal of length N.\newline
+
+Now consider $x_2$, which is $x_1$ followed by N zeros: \newline
+Let $x_2$[n] = [$x_0$ $x_1$ $x_2$ ... $x_{N-1}$ 0 0 0 ... 0]$^{T}$, a signal of length 2N.\newline
+
+You might be tempted to think we can gain some kind of information about the DTFT by adding zeros to the end of this signal. Find X$_2$($\omega$) in terms of X$_1$($\omega$) by expanding the DTFT equation one term at a time.
+
+\vspace{4mm}
+
+\section{Extra Problems: Zero Padding 2}
+
+Let $x_1$[n] = [$x_0$ $x_1$ $x_2$ ... $x_{N-1}$]$^{T}$, a signal of length N.\newline
+
+Now consider $x_3$, which is $x_1$ with a zero inserted between each index: \newline
+Let $x_3$[n] = [$x_0$ 0 $x_1$ 0 $x_2$ ... 0 $x_{N-1}$ 0 ]$^{T}$, a signal of length 2N.\newline
+
+You might be tempted to think we can gain some kind of information about the DTFT by inserting zeros into this signal. Find X$_3$($\omega$) in terms of X$_1$($\omega$) by expanding the DTFT equation one term at a time.
+
+
+
+
+\end{document}

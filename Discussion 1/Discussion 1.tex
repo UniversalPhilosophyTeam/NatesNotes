@@ -1,0 +1,159 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 1, 09/08/16}
+Nate Sawicki
+% $x[n]$ can refer to a sequence or a value
+
+\section{What is a digital signal? Discrete Time vs. Continuous Time}
+
+A digital signal is simply a sequence of discrete values. A digital signal x[n] is only valid for integer n. A continuous signal x(t) is valid for all t.
+
+
+Digital signals can be denoted using brackets, braces, or parenthesis.  \newline
+
+Example: x[n] =[\underline{1}, 2, 3, 3, 5, 1]
+
+\emph{NOTE:} We underline a value to denote the 0th index of a signal ( n = 0 )
+
+
+\section{Kronecker Delta (a.k.a. Delta Sequence, Unit Sample Sequence)}
+
+$\delta[n] = \begin{cases}1, & n = 0 \\ 0, & n\neq 0 \end{cases}$
+
+\subsection{Decomposition of Discrete Signals with Shifted Deltas}
+Any sequence $x[n]$ can be written as $x[n]=\sum\limits_{k=-\infty}^\infty x[k]\delta[n-k]$
+
+\subsection{Dirac Delta (a.k.a. Unit Impulse Function)}
+
+A loose definition:
+
+$\delta(t) = \begin{cases} +\infty,& t = 0 \\ 0, & t \neq 0 \end{cases}$ \quad  s.t. $\int_{-\infty}^\infty \delta(t) dt = 1$.
+
+
+A more precise definition:
+
+$\delta(t) = \lim\limits_{\Delta\rightarrow 0} \frac{1}{\Delta} rect(\frac{t}{\Delta})$
+
+\subsection{Decomposition of Continuous Signals with Shifted Deltas}
+Any continuous-domain function $x(t)$ can be written as $x(t)=\int\limits_{-\infty}^\infty x(\tau)\delta(t-\tau)d\tau$
+
+
+\subsection{Kronecker vs. Dirac}
+
+What's the deal with these different delta functions? 
+
+The Kronecker delta, denoted $\delta[n]$, is a sequence indexed over a discrete domain, in other words, $n \in \mathbb{Z}$. The Dirac delta, denoted $\delta(t)$ or drawn as an upward pointing arrow, is a function over a continuous domain, in other words $t \in \mathbb{R}$. In this class, we're dealing exclusively with discrete-time signals, so in the time domain, we'll have Kronecker deltas. However, when we take the DTFT of a discrete-time signal, we get a result in the continuous frequency domain ($\omega$), so if we have an impulse in the continuous frequency domain, it will be a Dirac delta, $\delta(\omega)$.
+
+Spiritually, these functions are the same though. 
+
+
+\section{Properties of Discrete Signals}
+
+\subsection{Periodicity}
+As signal $x[n]$ is periodic if there exists a number $n_0$ such that $x[n]=x[n-n_0]$ for all $n$. The period of the signal is $n_0$.
+
+For sinusoidal functions (i.e. $cos\left(\omega n + \phi\right)$), the function is periodic iff $\omega$ is a rational multiple of $\pi$, i.e. $\omega = \frac{M}{N}\pi$ for integers $M$ and $N$.
+
+\subsection{Boundedness}
+A signal is bounded if there exists a positive, finite number $B$ such that $|x[n]|  \leq B$ for all $n$. 
+
+\subsection{Causality}
+A signal $x[n]$ is causal if $x[n]=0$ for $n<0$.
+
+\subsection{Symmetry}
+A signal $x[n]$ is symmetric if $x[n] = x[-n]$. Signals with symmetry are also called "even".
+
+If instead a signal has the property that $-x[n] = x[-n]$, then it is called "odd".
+
+
+\section{Properties of Discrete-Domain Systems}
+
+\subsection{Causality}
+A system $\mathcal{T}$ is causal if $\mathcal{T}\{x[n]\}$ depends only on $x[n]$ for $n < 0$. In other words, it depends only on the present and past values of $x[n]$ and not the future values.
+
+\subsection{Linearity}
+A system $\mathcal{T}$ is linear iff for any inputs $x_1[n]$ and $x_2[n]$ and any scalars $a_1$ and $a_2$, $\mathcal{T}\{a_1x_1[n]+a_2x_2[n]\} = a_1\mathcal{T}\{x_1[n]\}+a_2\mathcal{T}\{x_2[n]\}$. 
+
+\subsection{Shift-Invariance (a.k.a. Time-Invariance)}
+Let $y[n] = \mathcal{T}\{x[n]\}$. Then the system $\mathcal{T}$ is shift-invariant if $\mathcal{T}\{x[n-n_0]\} = y[n-n_0]$. In other words, the output of the delayed signal is the same as the delay of the output signal.
+
+\subsection{Bounded Input Bounded Output (BIBO) Stability}
+A system $\mathcal{T}$ is called BIBO stable if any bounded input signal $x[n]$ results in a bounded output signal $y[n]$. If a bound $B_x$ exists for bounded $x[n]$, then there exists a bound $B_y$ such that $|y[n]|=|\mathcal{T}\{x[n]\}| \leq B_y$ for all $n$.
+
+\section{Properties of the Delta Functions}
+
+\subsection{Sampling Property of the Kronecker Delta}
+$\delta[n-n_0]x[n] = \delta[n-n_0]x[n_0]$
+
+\subsection{Sifting Property of the Kronecker Delta}
+$\sum\limits_{n=-\infty}^\infty \delta[n-n_0]x[n] = x[n_0]$
+
+\subsection{Scaling Property of the Dirac Delta}
+$\delta[2n]=\delta[n]$ Note that there is no scaling factor!
+
+\subsection{Sampling Property of the Dirac Delta}
+$\delta(t-t_0)x(t) = \delta(t-t_0)x(t_0)$
+
+note: The result is a function!
+
+\subsection{Sifting Property of the Dirac Delta}
+$\int\limits_{-\infty}^\infty \delta(t-t_0)x(t) = x(t_0)$
+
+note: The result is a scalar!
+
+\subsection{Scaling Property of the Dirac Delta}
+
+$\delta(\alpha t)= \frac{1}{|\alpha|} \delta(t)$ for any scalar $\alpha$
+
+
+
+\end{document}

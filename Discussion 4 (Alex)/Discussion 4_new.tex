@@ -1,0 +1,246 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 3} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 3, 1/23/2017}
+Nate Sawicki \newline
+Select problems by Mai Le and Kevin Moon
+
+\section{Inner Product}
+Prove the Pythagorean theorem for norms defined by inner products. That is, if z = x + y and \newline
+x $\perp$ y, then ||x||$^2$ + ||y||$^2$ = ||z||$^2$
+
+\section{Valid or Invalid Inner Product}
+Consider signals in $\mathbb{R}^2$. Your friend tells you he has discovered a new inner product. He writes the expression for the new inner product below (length 2 signals).
+
+\vspace{2mm}
+\begin{center}
+<x,y> = $x_1$$^3$$y_1$$^3$+$x_2$$y_2$
+\end{center}
+\vspace{2mm}
+
+a)\newline
+Does the proposed computation satisfy the positivity requirement of an inner product? \newline(<x,x> $\geq$ 0 and <x,x> = 0 iff x = 0)\newline
+
+b)\newline
+Recall that for an inner product space, the following property must be true. <$\alpha$x, y> = $\alpha$*<x,y>. For a real vector space,  only containing real entries, the following property must be satisfied.
+\vspace{2mm}
+\begin{center}
+<$\alpha$x, y> = $\alpha$<x,y>
+\end{center}
+\vspace{2mm}
+Has your friend satisfied this requirement?
+\vspace{2mm}
+
+
+\section{DFT Basis}
+
+Recall the following valid un-normalized basis function.
+\begin{center}
+w$_k$[n] = W$_N^{-nk}$ = e$^{\frac{j2\pi nk}{N}}$
+\end{center}
+
+a) Generate the Fourier Basis Vectors for $\mathbb{R}^3$
+
+\vspace{2mm}
+
+b) Verify that the Vectors you found in a) are orthogonal
+
+
+\newpage
+
+c) Recall the definition of the DFT:
+
+\begin{center}
+
+X[k]= $\sum_n x[n] e^{-j2\pi nk/N}$
+
+\end{center}
+
+Compute X[k] for x[n] = [3 5 1]\newline
+
+d) Compute the inverse DFT of X[k]\newline
+
+\vspace{2mm}
+
+e) Compute the coordinates of x[n] with respect to the normalized Basis from part a)\newline
+\vspace{2mm}
+
+f) Let $\gamma$ represent the normalizing constant you used in e) to create the normalized basis from a). Using $\gamma$ explain the relationship between X[k] and the coordinates you found in e)
+
+
+\vspace{3mm}
+
+\section{Valid Basis?}
+
+Are the following set of vectors a valid basis for $\mathbb{R}^3$
+
+\begin{center}
+
+ 
+$
+b_1 = 
+\begin{bmatrix}
+
+1 \\
+0 \\
+8 \\
+
+\end{bmatrix}
+$
+\end{center}
+
+\begin{center}
+
+ 
+$
+b_2 = 
+\begin{bmatrix}
+
+0 \\
+1 \\
+-3
+
+\end{bmatrix}
+$
+\end{center}
+
+\section{Valid Basis?}
+
+Are the following set of vectors a valid basis for $\mathbb{R}^3$
+
+\begin{center}
+
+ 
+$
+b_1 = 
+\begin{bmatrix}
+
+1 \\
+0 \\
+8 \\
+
+\end{bmatrix}
+$
+\end{center}
+
+\begin{center}
+
+ 
+$
+b_2 = 
+\begin{bmatrix}
+
+0 \\
+1 \\
+-8
+
+\end{bmatrix}
+$
+\end{center}
+
+\begin{center}
+
+ 
+$
+b_3 = 
+\begin{bmatrix}
+
+0 \\
+1 \\
+0
+
+\end{bmatrix}
+$
+\end{center}
+
+
+
+
+\vspace{5mm}
+
+\begin{center}
+\[
+B = 
+\begin{bmatrix}
+  b_1 \hspace{2mm} b_2 \hspace{2mm} b_3           
+\end{bmatrix}
+\]
+\end{center}
+
+\newpage
+\section{A different way of thinking}
+
+Your friend has a favorite two digit number. But your friend is cheeky and he doesn't want to give you this important information without a bit of trickery. \newline
+The secret number is encoded as a length two signal. He gives you the \textbf{coordinates with respect to the Normalized Basis Function from part 3} of the length two signal.
+
+\begin{center}
+
+$c_0$ = $\frac{9}{\sqrt{2}}$
+\end{center}
+
+
+\begin{center}
+
+$c_1$ =  $\frac{7}{\sqrt{2}}$
+\end{center}
+
+What is your friend's favorite number?
+
+\section{Free Response}
+
+Express the length 4 signal x = [1 2 1 4]$^T$  as a weighted sum of $\frac{1}{N}$W$_N^{-nk}$ terms  (4 terms total)
+
+
+
+\end{document}

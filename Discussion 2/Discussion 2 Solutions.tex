@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 1} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 1 with MATLAB demo SOLUTIONS, 09/08/16}
+Nate Sawicki
+
+\section*{4 \hspace{3mm} Basis Examples}
+
+\subsection*{4.1 \hspace{3mm} Basis Problem}
+
+Consider the Hilbert Space $\mathbb{R}^3$ with real scalars. Find a basis for $\mathbb{R}^3$  that includes the following two vectors:
+\[
+\begin{bmatrix}
+   1        \\
+    -2      \\
+    1      
+\end{bmatrix}
+,
+\begin{bmatrix}
+    1  \\
+    4 \\
+    -2 
+\end{bmatrix}
+\]
+Solution:\newline
+We try the following vector as the third basis vector
+\begin{center}
+\[
+\begin{bmatrix}
+   -2        \\
+    -2      \\
+    2     
+\end{bmatrix}
+\]
+
+
+\end{center}
+
+\vspace{3mm}
+We can verify these vectors as a valid basis if the matrix
+
+\begin{center}
+\[
+\begin{bmatrix}
+   1  \hspace{3mm} 1 \hspace{ 3mm} -2      \\
+   -2  \hspace{3mm} 4 \hspace{ 3mm} -2  \\
+    1  \hspace{3mm} -2 \hspace{ 3mm} 2   
+\end{bmatrix}
+\]
+\end{center}
+
+can be row-reduced to the identity matrix. This is equivalent to writing the canonical basis as a linear combination of basis vectors. You can also plug the above matrix into MATLAB. The function rank(matrix) returns the number of linearly independent columns. 
+
+\subsection*{4.2 \hspace{3mm} Show vectors form a basis}
+Show that these four vectors form a basis for $\mathbb{R}^4$:
+\[
+\begin{bmatrix}
+   1        \\
+    0      \\
+   0       \\
+    0      
+\end{bmatrix}
+,
+\begin{bmatrix}
+      1        \\
+    1      \\
+   0       \\
+    0      
+\end{bmatrix}
+,
+\begin{bmatrix}
+   1        \\
+    1     \\
+   1    \\
+    0      
+\end{bmatrix}
+,
+\begin{bmatrix}
+       1        \\
+    1      \\
+   1       \\
+    1      
+\end{bmatrix}
+\]
+
+\vspace{3mm}
+Solution:\newline
+Similar to 4.1, it is easy to show that these vectors row reduce to the identity matrix, or canonical basis. Thus, these vectors represent a valid basis for $\mathbb{R}^4$
+
+\subsection*{4.3 \hspace{3mm} Orthonormal Basis}
+Similar to 4.1 and 4.2, these vectors can be row-reduced to the identity matrix, so we know these form a valid basis for $\mathbb{R}^4$. To satisfy orthonormality, we just need to verify that each vector satisfies the following properties:
+
+\begin{center}
+
+$v_i$$^T$$v_j$$^T$ = 0 when i $\neq$ j.
+
+||$v_i$|| = $\sqrt{v_i^T v_i}$ = 1 for all i 
+
+\end{center}
+
+\subsection*{4.4 \hspace{3mm} Finding vectors that DON'T form a Basis}
+Any value of $\alpha$ will make this a valid basis except for $\alpha$ = 1. Note, $\alpha$ = -1 makes these vectors orthogonal.
+
+
+\subsection*{4.5 \hspace{3mm} Functions as a basis}
+
+Consider the Hilbert space of continuous-time real-valued polynomials of degree 3 defined on the interval [a,b]. Show that the polynomials\newline
+
+\begin{center}
+
+$x_0(t) = 1, x_1(t) = t, x_2(t) = t^2, x_3(t) = t^3$
+
+\end{center}
+
+\vspace{3mm}
+
+form a basis for this space.\newline\newline
+
+Solution: For this to be a basis, we require linear independece between the vectors. This means that we need to show that uniformily \emph{for all} t$\epsilon$[a,b], the only $B_i$ that satisfy the equation
+
+\begin{center}
+
+$\beta_0 x_0(t) + \beta_1 x_1(t) + \beta_2 x_2(t) + \beta_3 x_3(t) = 0   \hspace{3mm}$  (for all t over the interval)
+
+\end{center}
+
+are $B_i$ = 0 for all i.\newline
+
+We can do this by choosing four distinct values of t and then showing that the resulting system of equations has only one solution with $B_i$ = 0 for all i. Feel free to pick four values and verify the solution for $B_i$, but these $x_i$ do in fact represent a basis.
+
+\section*{Representing the same signal with different bases}
+
+\section*{5.2 \hspace{3mm} Standard Basis}
+{\color{blue}
+$c = \{\underline{1}, 1, 2, 3, 5\}$
+}
+
+
+\section*{5.2 \hspace{3mm} Unit Step Sequences}
+Recall $u[n] = \begin{cases}1, & n \geq 0\\ 0, & n < 0 \end{cases}$. Let $\mathcal{S}_u = \{u[n-n_0]|n_0 \in \mathbb{Z}\}$ (unit steps shifted by any integer $n_0$) be your basis sequences. Represent $x[n]$ in $\mathcal{S}_u$.
+
+In other words, show you can write $x[n]=\sum\limits_{k=-\infty}^\infty c_k u[n-k]$ by finding the values for $c_k$.
+
+{\color{blue}
+$c = \{\underline{1}, 0, 1, 1, 2, -5\}$
+}
+
+\subsection*{5.3 \hspace{3mm} Three-Tap Rectangles}
+Let $r[n] = \{\underline{1},1,1\}$ and $\mathcal{S}_r = \{r[n-n_0]|n_0 \in \mathbb{Z}\}$. Represent $x[n]$ in $\mathcal{S}_r$.
+
+{\color{blue}
+$c = \{\underline{1}, 0, 1, 2, 0, 2, -4, 2, 2, -4, 2, 2, -4, \ldots \}$
+}
+
+
+\section*{Vector Space, Hilbert Spaces, and Inner Products}
+
+\subsection*{6.1 \hspace{3mm} Inner Product}
+Prove the Pythagorean theorem for norms defined by inner products. That is, if z = x + y and \newline
+x $\perp$ y, then ||x||$^2$ + ||y||$^2$ = ||z||$^2$\newline
+
+Solution:
+\begin{center}
+
+||z||$^2$
+
+\end{center}
+\begin{center}
+
+= ||x + y||$^2$
+
+\end{center}
+\begin{center}
+
+= (x+y)(x+y)
+
+\end{center}
+
+\begin{center}
+
+= $x^2 + 2xy + y^2$
+
+\end{center}
+
+\begin{center}
+
+xy = 0 since x $\perp$ y
+
+\end{center}
+
+\begin{center}
+
+= $x^2 + y^2$ = ||x||$^2$ + ||y||$^2$
+
+\end{center}
+
+\subsection*{7.1 \hspace{3mm} Complex Space}
+
+Nate needs a new solution to this one. Post your answers to Piazza :)
+
+
+\end{document}

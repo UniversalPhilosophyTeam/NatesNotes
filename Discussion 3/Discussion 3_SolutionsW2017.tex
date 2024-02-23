@@ -1,0 +1,323 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 3} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 3, 1/23/2017}
+Nate Sawicki \newline
+Select problems by Mai Le and Kevin Moon
+
+\section{Coordinates with Respect to a Basis}
+Last week we spent a bunch of time talking about what constitutes a basis. Now we will explore the mathematical and geometric concept of a \emph{change of basis}.
+
+\vspace{5mm}
+Think back to grade school... You probably learned about coordinate systems and learned how to plot points/signals on the coordinate system. If I told you to plot (4, 1) using a standard coordinate system, you counted four boxes to the right, and one box up. You didn't know it, but you were actually using the standard/canonical basis and coordinates to represent a signal.\newline
+
+Let $b_1$ and $b_2$ represent the canonical basis vectors for $\mathbb{R}^2$\newline
+
+\begin{center}
+
+ 
+$
+b_1 = 
+\begin{bmatrix}
+
+1 \\
+0
+
+\end{bmatrix}
+$
+\end{center}
+
+\begin{center}
+
+ 
+$
+b_2 = 
+\begin{bmatrix}
+
+0 \\
+1
+
+\end{bmatrix}
+$
+\end{center}
+
+
+
+
+\vspace{5mm}
+
+\begin{center}
+\[
+B = 
+\begin{bmatrix}
+  b_1 \hspace{2mm} b_2            
+\end{bmatrix}
+\]
+\end{center}
+
+\vspace{4mm}
+
+ In this problem, we have a signal \textbf{x}, a basis B, and we need to find the coordinates \textbf{c} = [$c_1$ $c_2$]$^T$ of our signal \textbf{x}.
+
+\begin{center}
+
+\textbf{x} = x[n] = 
+$
+\begin{bmatrix}
+
+4\\
+1 
+
+\end{bmatrix}
+$
+\end{center}
+\vspace{2mm}
+
+\begin{center}
+
+B\textbf{c} = \textbf{x} = x[n] = $\sum\limits_{m = 1}^{N} c_m b_m[n] = 0$
+\end{center}
+
+\vspace{2mm}
+
+\[
+\begin{bmatrix}
+   1 \hspace{3mm} 0       \\
+   0 \hspace{3mm} 1            
+\end{bmatrix}
+\begin{bmatrix}
+    4 \\
+    1
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    4  \\
+    1
+\end{bmatrix}
+\]
+
+\vspace{4mm}
+
+Thus $c_1$ = 4 and $c_2$ = 1. These c values give us the weight terms to form \textbf{x} as a linear combination of our basis vectors. In this discussion we will discuss how to graphically depict this relationship and analytically obtain \textbf{c}.\newpage
+
+\section{How to Obtain the Coordinates for an Orthonormal Basis}
+
+Let B = [$v_1$ ... $v_n$] represent an orthonormal basis for $\mathbb{R}^n$. We can compute the $i^{th}$ coordinate for a signal \textbf{x} using an inner product. \\
+
+The $i^{th}$ coordinate is computed by taking the inner product of \textbf{x} with the $i^{th}$ basis vector.\newline
+\begin{center}
+
+$c_i$ = < $v_i$, \textbf{x} >
+
+\end{center}
+
+Trivial Example:
+
+\[
+\begin{bmatrix}
+   1 \hspace{3mm} 0       \\
+   0 \hspace{3mm} 1            
+\end{bmatrix}
+\begin{bmatrix}
+    4 \\
+    1
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    4  \\
+    1
+\end{bmatrix}
+\]
+
+In the example above we claimed and verified that $c_1$ = 4 and $c_2$ = 1. Since the standard/canonical basis is orthonormal we can use our new rule to calculate $c_1$ = 4 and $c_2$ = 1.\newline
+
+\begin{center}
+$c_1$ = <$v_1$, \textbf{x}, >
+\end{center}
+\begin{center}
+= < [4 1] , [1 0]> = 4*1 + 1*0 = 4
+\end{center}
+
+\begin{center}
+$c_2$ = < $v_2$, \textbf{x}, >
+\end{center}
+\begin{center}
+= < [4 1] , [0 1]> = 4*0 + 1*1 = 1
+\end{center}
+
+\vspace{3mm}
+
+Example: Haar Basis\newline
+As a class, compute the coefficients for \textbf{x} with respect to the orthonormal Haar Basis.\newline
+\[
+B_{haar} = 
+\begin{bmatrix}
+  \frac{1}{\sqrt{2}} \hspace{2mm} \frac{1}{\sqrt{2}} \\
+  \frac{1}{\sqrt{2}} \hspace{2mm} \frac{-1}{\sqrt{2}}       
+\end{bmatrix}
+\]
+
+\color{blue}
+Solution:
+Since B$_{haar}$ is orthonormal:
+
+\begin{center}
+
+$c_0 = <b_0,x>$ = $\frac{4}{\sqrt(2)}$ + $\frac{1}{\sqrt(2)}$ = $\frac{5}{\sqrt(2)}$
+
+\end{center}
+\begin{center}
+
+$c_1= <b_1,x>$ = $\frac{4}{\sqrt(2)}$ - $\frac{1}{\sqrt(2)}$ = $\frac{3}{\sqrt(2)}$
+
+\end{center}
+
+\color{black}
+
+\section{How to Obtain the Coordinates for an Arbitrary Basis}
+Typically we use matrix vector multiplication when expressing a signal with respect to a basis. However, the basis functions you work with won't always be orthonormal. So is it still possible to find the coordinates \textbf{c} given a basis B and a signal \textbf{x}? Yes it's possible, but it requires a matrix inverse. We will not cover a matrix inverse in this class, but for the curious student.
+
+\begin{center}
+B\textbf{c} = \textbf{x} 
+\end{center}
+
+\begin{center}
+\textbf{c} = $B^{-1}$\textbf{x} 
+\end{center}
+
+Those of you with linear algebra experience may know that not all matrices have an inverse. However, any valid basis is comprised of linearly independent columns (full rank). Any full rank matrix is guaranteed to have an inverse such that M*M$^{-1}$ = I. Do not fret if you do not understand these terms, but do know that linear algebra is crucial to understanding higher level classes such as Machine Learning, Artificial Intelligence, and Computer Vision.
+
+\section{Graphical Representation of a Basis}
+
+Draw on the board to represent x = [4 1]$^T$ with respect to the canonical basis and Haar basis. See discussion solutions for a detailed drawing.
+
+
+\section{Connection to the Digital Fourier Transform}
+
+Most of this class will not be about bases and change of basis. Much of the class is devoted to the Digital Fourier Transform (DFT). Discussing the DFT as a change of Basis will give us deeper insight into the meaning of this extremely powerful computation. 
+
+\vspace{2mm}
+\begin{center}
+
+$
+X[k] =  \sum_{n = 0}^{N-1} x[n]  e^{-j 2\pi nk/N}
+$
+
+\end{center}
+\vspace{3mm}
+\begin{center}
+
+$
+x[n] =\frac{1}{{N}} \sum_{k = 0}^{N-1} X[k]  e^{j 2\pi nk/N}
+$
+
+\end{center}
+
+\vspace{3mm}
+
+This is the equation you'll find in most DSP textbooks for the the DFT. But notice the equation for x[n]. We are simply expressing x[n] as a weighted sum using the DFT basis. Let's see this in action.
+
+Example:
+
+Consider the following basis B for $\mathbb{R}^4$
+\begin{center}
+
+\[
+\frac{1}{2}
+\begin{bmatrix}
+ 1\hspace{5mm} 1\hspace{5mm} 1 \hspace{5mm}1\\
+ 1\hspace{4mm} j\hspace{4mm} {-1}\hspace{4mm} {-j} \\
+1 \hspace{4mm}{-1}\hspace{4mm} 1 \hspace{4mm}{-1}\\
+1\hspace{4mm} {-j}\hspace{4mm} {-1}\hspace{4mm} j
+\end{bmatrix}
+\]
+
+\end{center}
+
+Suppose I have a signal x[n] = [1 2 3 4].  Express x[n] as a weighted sum of the columns of B. Using the notation Bc = x, find the coordinates c. Note, the coordinates c are equal to $\frac{1}{\sqrt(N)}$ times the values of fft(x) = X[k].
+\newpage
+\color{blue}
+Solution:
+
+Since B is an orthonormal basis, the coordinates can be found by taking an inner product of the basis vectors and signal vector:
+
+\begin{center}
+
+$c_0$ = <$b_0$,x> = 5
+
+\end{center}
+
+Alternatively, we can matrix multiply:
+
+\begin{center}
+
+c = B$^{-1}$x = [5, (-1+1j), -1 , -1-j]$^T$
+
+\end{center}
+
+
+\color{black}
+
+\section{Inner Product}
+Prove the Pythagorean theorem for norms defined by inner products. That is, if z = x + y and \newline
+x $\perp$ y, then ||x||$^2$ + ||y||$^2$ = ||z||$^2$
+
+\color{blue}
+Solution: See the solutions for discussion 4
+
+
+
+
+\end{document}

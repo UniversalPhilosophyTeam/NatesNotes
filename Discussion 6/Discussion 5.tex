@@ -1,0 +1,220 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                
+\geometry{letterpaper}                 
+\usepackage[parfill]{parskip}        
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{grffile}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc}
+\usepackage[hang,small]{caption}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{ {C:/Users/Nate/Documents/School/EECS351/Nates Discussion Material/Discussion 4} }
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{1,1,1}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle= \scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+        	showstringspaces=false,
+        	extendedchars=true,
+        	breaklines=true,
+        	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        	frame=single,
+        	showtabs=false,
+        	showspaces=false,
+        	showstringspaces=false,
+        	identifierstyle=\ttfamily,
+        	keywordstyle=\color[rgb]{0,0,1},
+        	commentstyle=\color[rgb]{0.133,0.545,0.133},
+        	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+
+\begin{document}
+
+\section*{EECS351 Discussion 6 Problems, 10/13/16}
+Nate Sawicki \newline
+Select problems by Mai Le and Kevin Moon
+
+
+\section{Convolution equations}
+
+\vspace{3mm}
+
+\begin{center}
+
+$
+x[n] * h[n] = \sum_{\tau  = -\infty}^{\infty} x[\tau] h[n - \tau]
+$
+\end{center}
+
+\vspace{3mm}
+
+
+\begin{center}
+
+$
+x[n] *  h[n] \longleftrightarrow X(\omega)H(\omega)
+$
+\end{center}
+
+Note:\newline
+(a) x[n] *  h[n] is a function of n, not $\tau$.\newline
+(b) For EVERY index of n, you need to compute a potentially infinite sum.
+
+\vspace{3mm}
+
+\section{Graphical Intuition}
+
+Understanding the graphical intuition behind its definition is one way to compute convolution. Here is my step by step process for computing convolution by looking at the problem graphically:\newline
+
+\begin{center}
+
+$
+x[n] * h[n] = y[n]
+$
+\end{center}
+
+\vspace{1.5mm}
+
+(1) Pick either x[n] or h[n] (doesn't matter which) and call this $x_1$[n]. Draw this in solid ink, because you won't be changing it.\newline
+(2) Pick the other signal and call it $x_2$[n]. Draw $x_2$[n] on separate axes directly underneath $x_1$[n]. You will be shifting $x_2$[n] frequently, so don't draw it too permanently.\newline
+(3) Flip $x_2$[n] about the y-axis, call this $x_3$.\newline
+(4) For EVERY value of n, compute the infinite sum associated with convolution for a fixed n. This infinite sum is computed by adding the element-wise product of $x_1$ and the shifted version of $x_3$ at each value of tau. This value of the infinite sum is equal to y[n] for a fixed n. A value of n = 3, corresponds to shifting $x_3$[n] to the right by 3.  A value of n = -5, corresponds to shifting $x_3$[n] to the left by 5. 
+
+\section{Convolution example}
+
+Let x[n] = [1, -1]\newline
+Let h[n] = [3, 5, 1]
+
+As a class, use the steps for graphical convolution to verify:
+
+\begin{center}
+
+x[n] * h[n] = [3, 2, -4, -1]
+
+\end{center}
+
+
+\section{Basic Problem}
+
+Let $x_1$ have length N, let $x_2$ have length M. \newline
+
+What is the length of $x_3$[n] = $x_1$[n] * $x_2$[n]
+
+
+\section{Faster Method for Convolution}
+
+There is a faster method for computing convolution, but it requires less understanding. This is what we call the "stack and sum" method:\newline
+
+\begin{center}
+
+$
+x[n] * h[n] = y[n]
+$
+\end{center}
+
+\begin{center}
+
+$
+y[n] = h[0]x[n]
+$
+$$
++ [0 \hspace{1.5mm} h[1]x[n]]
+$$
+$$
++ [0 \hspace{1.5mm} 0 \hspace{1.5mm} h[2]x[n]] + ...
+$$
+$$
++ [0...(N zeros) \hspace{1.5mm}  \hspace{1.5mm} h[N-1]x[n]]
+$$
+
+
+\end{center}
+
+
+\vspace{1.5mm}
+
+
+
+
+
+\section{Stack and Sum Method}
+
+Let x[n] = [3, 5, 1]\newline
+Let h[n] = [2, 1, 6]\newline
+
+\vspace{3mm}
+(a) Find x[n] * h[n] using the stack and sum method\newline
+(b) Find h[n] * x[n] using the stack and sum method\newline
+(c) Is part (a) the same as part (b)? What is the length of x[n] * h[n], does your answer agree with Problem 4?
+
+
+\newpage
+
+\section{Challenge Problem: Convolution}
+
+In analog signal processing, it was often easier to think about multiplication in the frequency domain, rather than convolution in the time domain. Here's a problem where it is probably easier to think in terms of convolution.
+
+Let:
+
+
+\begin{center}
+
+
+x[n] = [0 1 1 1]
+
+\end{center}
+\begin{center}
+
+
+h[n] = [... , -1 ,2, -1, 2, -1 , ...] with h[0] = -1
+
+\end{center}
+
+\vspace{4mm}
+
+(a) Find y[n] = x[n] * h[n]\newline
+(b) Express X($\omega$) as a sum of three complex exponentials. Express H(w) as a sum of infinity complex exponentials.\newline
+(c) Find Y($\omega$) and take the inverse DTFT to obtain y[n], you should get the same answer as part a
+
+
+\section{Challenge Problem: Proofs}
+
+(a) Show that x[n] * h[n] = h[n] * x[n]\newline
+(b) Show the convolution property of the DTFT:
+
+
+
+\begin{center}
+
+$ 
+x[n] * h[n] \longleftrightarrow X(\omega) H(\omega)
+$
+\end{center}
+
+
+
+
+\end{document}
